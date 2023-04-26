@@ -1,8 +1,13 @@
 import React from 'react';
 import './App.css';
+import Header from './components/Header/Header';
 
 function App() {
-	return <div id='app-container'>App</div>;
+	return (
+		<div id='app-container'>
+			<Header />
+		</div>
+	);
 }
 
 export default App;

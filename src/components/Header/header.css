@@ -1,0 +1,26 @@
+.app-header {
+    width: 100%;
+    background-color: rgb(181, 71, 165);
+    height: 30%;
+    /*min-height: 80px;*/
+    display: grid;
+    grid-template-columns: 0.1fr 2fr 1fr;
+    border-color: rgb(181, 71, 165);
+    border-radius: 10px;
+    border-style: solid;
+    align-items: center;
+    color:white;
+    
+}
+
+.app-logo {
+    width: 132px;
+    height: 62px;
+    object-fit:contain;
+  }
+
+.app-user-name {
+    text-align: right;
+    padding-right: 10%
+    
+}
