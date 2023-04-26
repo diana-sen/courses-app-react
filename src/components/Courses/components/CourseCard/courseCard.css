@@ -1,0 +1,54 @@
+.app-section-card {
+    background: #474E68;
+    color: whitesmoke;
+    padding: 0px 10px 10px 20px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: repeat(5, .20fr);
+    grid-template-areas: 
+        "title  author "
+        "title  duration"
+        "description  creation"
+        "description  ."
+        "description  button";
+    border-radius: 10px;
+
+}
+
+.app__button--show-course {
+    grid-area: button;
+    padding-left: 20%;
+}
+
+.app__card-description {
+    grid-area: description;
+    font-size: 14px;
+}
+
+.app__card-title {
+    grid-area: title;
+    color:#55d862;
+}
+
+.app__card-author {
+    grid-area: author;
+    font-size: 14px;
+    padding-left: 10%;
+    margin: 5px 0px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.app__card-duration {
+    grid-area: duration;
+    font-size: 14px;
+    padding-left: 10%;
+}
+
+.app__card-creation {
+    grid-area: creation;
+    font-size: 14px;
+    padding-left: 10%;
+}

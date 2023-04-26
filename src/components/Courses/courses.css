@@ -1,0 +1,8 @@
+.app__bar {
+    padding-top: 2%;
+    display: flex;
+    flex-direction: row;
+    width:100%;
+    align-items: center;
+
+}
