@@ -1,21 +1,19 @@
 import React from 'react';
 import { BUTTON_TEXT } from '../../../../constants';
 import { Button } from '../../../../common/Button/Button';
+import { Input } from '../../../../common/Input/Input';
 import './searchBar.css';
 
-export const SearchBar = ({ labelText, placeholderText, onChange }) => {
+export const SearchBar = ({ labelText, onChange, onClick }) => {
 	return (
 		<div className='app__bar-section'>
-			<input
-				name='search-bar'
+			<Input
 				className='app__search-bar'
-				type='text'
-				id='search'
-				placeholder={placeholderText}
+				placeholderText='Enter course name'
 				onChange={onChange}
-			></input>
+			/>
 			<label htmlFor='search'>{labelText}</label>
-			<Button text={BUTTON_TEXT} />
+			<Button text={BUTTON_TEXT} onClick={onClick} />
 		</div>
 	);
 };
