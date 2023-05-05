@@ -1,10 +1,10 @@
 import React from 'react';
 import './input.css';
 
-export const Input = ({ className, placeholderText, onChange }) => {
+export const Input = ({ id, className, placeholderText, onChange }) => {
 	return (
 		<input
-			id='commonInput'
+			id={id}
 			type='text'
 			className={className}
 			placeholder={placeholderText}

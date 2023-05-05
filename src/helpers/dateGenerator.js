@@ -7,3 +7,14 @@ export function dateConverter(date) {
 	return day + '.' + month + '.' + year;
 }
 */
+
+export function getcurrentDate() {
+	const currentDate = new Date();
+	return (
+		currentDate.getDate() +
+		'/' +
+		(currentDate.getMonth() + 1) +
+		'/' +
+		currentDate.getFullYear()
+	);
+}

@@ -35,9 +35,5 @@ function authorsNames(authors) {
 	let names = authors
 		.map((author) => author.name)
 		.reduce((concatenatedAuthors, name) => concatenatedAuthors + ', ' + name);
-	if (names.length > 28) {
-		let subNames = names.substring(0, 27) + '...';
-		return subNames;
-	}
 	return names;
 }

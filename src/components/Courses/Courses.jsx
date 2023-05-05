@@ -5,11 +5,6 @@ import { Button } from '../../common/Button/Button';
 import { SearchBar } from './components/SearchBar/SearchBar';
 import './courses.css';
 
-//perform search by title and id
-//by the occurrence of characters in the string,
-// and not just by a match at the beginning
-//clicks on Search button displays all courses that match the search
-//All courses when user cleans search
 const Courses = ({ onAddCourse }) => {
 	const [courses, setCourses] = useState(mockedCoursesList);
 	const [query, setQuery] = useState('');
@@ -17,7 +12,9 @@ const Courses = ({ onAddCourse }) => {
 	const searchHandler = () => {
 		const keys = ['title', 'id'];
 		const searchResults = mockedCoursesList.filter((course) =>
-			keys.some((key) => course[key].toLowerCase().includes(query))
+			keys.some((key) =>
+				course[key].toLowerCase().includes(query.toLowerCase())
+			)
 		);
 		setCourses(searchResults);
 	};
@@ -36,8 +33,6 @@ const Courses = ({ onAddCourse }) => {
 			</div>
 		);
 	});
-	console.log('-------------------');
-	console.log(onAddCourse);
 
 	return (
 		<div className='app__course-wrapper'>

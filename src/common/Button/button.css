@@ -10,12 +10,7 @@
     width: 130px;
 }
 
-.app-common__button--read-more {
-    border-radius: 26px;
-    font-size: 14px;
-    height: 46px;
-    letter-spacing: 1.2px;
-    margin: 60px auto 108px;
-    text-transform: uppercase;
-    width: 135px;
+.app-common__button:hover {
+    background: #bbddf0;
+    color: black;
 }

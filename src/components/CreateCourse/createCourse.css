@@ -1,0 +1,131 @@
+.app__add-wrapper {
+    margin-top: 2%;
+    display: flex;
+    width:100%;
+    align-items: center;
+    color: white;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr ;
+    grid-template-rows: 1fr ;
+    grid-template-areas: 
+        "title-course "
+        "authors";
+}
+
+.app__add-title-description-section {
+    background: #474E68;
+    border-radius: 10px;
+    display: grid;
+    width: 100%;
+    grid-area: title-course;
+    grid-template-columns: 1fr 1fr ;
+    grid-template-rows: repeat(2,1fr) ;
+    grid-template-areas: 
+        "title course "
+        "description description ";
+    margin: auto;
+    padding: 5px;
+    text-align: left;
+    color: white;
+    align-items: center;
+}
+
+.app__add-input {
+    width: 70%;
+}
+
+.app__add-title {
+    grid-area: title;
+    padding: 0px 30px 0px 30px;
+}
+
+.app__add-title h2{
+    margin: 0;
+}
+.app__add-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    grid-area: course;
+    width: 100%;
+}
+
+.app__add-description-section {
+    display: grid;
+    grid-area: description;
+    padding: 0px 30px;
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.app__add-authors-section {
+    background: #474E68;
+    width: 100%;
+    border-radius: 10px;
+    display: grid;
+    grid-area: authors;
+    text-align: center;
+    grid-template-columns: 1fr 1fr ;
+    grid-template-rows: 1fr ;
+    grid-template-areas: 
+        "add-author authors-list ";
+    margin: auto;
+    padding: 5px;
+    text-align: left;
+    color: white;
+    align-items: center;
+}
+
+.authors-duration-section {
+    display: grid;
+    grid-area: add-author;
+    grid-template-columns: 1fr ;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: 
+    "create-author" 
+    "duration";
+    padding-left: 30px;
+    text-align: left;
+}
+
+.create-author-section  {
+    grid-area: create-author;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    height: 30px;
+    width: 80%;
+}
+.create-author-section input {
+    margin-bottom: 10px;
+    height: 30px;
+    width: 80%;
+}
+
+.create-duration-section {
+    grid-area: duration;
+    margin-top: 10px;
+}
+
+.add-duration input {
+    height: 30px;
+    width: 80%;
+}
+
+.add-current-author-section {
+    grid-area: authors-list; 
+    display: flex;
+    flex-direction: column;
+}
+
+.add-list-current-authors {
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    grid-template-rows: 1fr ;
+    align-items: center;
+    margin: 8px 0px;
+}
+
+.authors-list-section {
+    grid-area: current-authors;
+}

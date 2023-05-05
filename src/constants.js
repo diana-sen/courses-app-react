@@ -6,6 +6,7 @@ export const BUTTON_ADD_AUTHOR = 'Add author';
 export const BUTTON_DELETE_AUTHOR = 'Delete author';
 export const BUTTON_ADD_COURSE = 'Add new course';
 export const BUTTON_SHOW_COURSE = 'Show course';
+export const BUTTON_CANCEL_COURSE = 'Cancel';
 
 export const mockedCoursesList = [
 	{
