@@ -5,13 +5,13 @@ import { Button } from '../../common/Button/Button';
 import { SearchBar } from './components/SearchBar/SearchBar';
 import './courses.css';
 
-const Courses = ({ onAddCourse }) => {
-	const [courses, setCourses] = useState(mockedCoursesList);
+const Courses = ({ onAddCourse, coursesList }) => {
+	const [courses, setCourses] = useState(coursesList);
 	const [query, setQuery] = useState('');
 
 	const searchHandler = () => {
 		const keys = ['title', 'id'];
-		const searchResults = mockedCoursesList.filter((course) =>
+		const searchResults = coursesList.filter((course) =>
 			keys.some((key) =>
 				course[key].toLowerCase().includes(query.toLowerCase())
 			)
@@ -22,7 +22,7 @@ const Courses = ({ onAddCourse }) => {
 	const updateKeywords = (e) => {
 		const value = e.target.value;
 		if (!value) {
-			setCourses(mockedCoursesList);
+			setCourses(coursesList);
 		}
 		setQuery(e.target.value);
 	};

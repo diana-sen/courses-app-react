@@ -4,9 +4,8 @@ import { Input } from '../../common/Input/Input';
 import { Button } from '../../common/Button/Button';
 
 import { durationConverter } from '../../helpers/pipeDuration';
-import { getcurrentDate } from '../../helpers/dateGenerator';
 
-import { getAllAuthors } from '../../helpers/authorsNaming';
+import { getAllAuthors, addAuthor } from '../../helpers/authorsNaming';
 import './createCourse.css';
 
 import {
@@ -15,22 +14,17 @@ import {
 	BUTTON_CREATE_AUTHOR,
 	BUTTON_DELETE_AUTHOR,
 	BUTTON_CANCEL_COURSE,
-	//	CANCEL_CREATE_COURSE_LABEL,
 } from '../../constants';
+import { AuthorsList } from './AuthorsList/AuthorsList';
 
-export const CreateCourse = ({ onCloseCreateCourse }) => {
+export const CreateCourse = ({ onCloseCreateCourse, onCreateCourse }) => {
 	const [dataCourse, setDataCourse] = useState({
-		title: '',
-		description: '',
-		creationDate: '',
 		duration: 0,
 		authors: [],
 	});
 
-	const [newDataAuthor, setnewDataAuthor] = useState({
-		id: '',
-		name: '',
-	});
+	const [allAuthors, setAllAuthors] = useState(getAllAuthors());
+	const [courseAuthors, setCourseAuthors] = useState([]);
 
 	const createCourse = () => {
 		const title = document.querySelector('#title')?.value;
@@ -42,11 +36,12 @@ export const CreateCourse = ({ onCloseCreateCourse }) => {
 			...dataCourse,
 			title: title,
 			description: description,
-			creationDate: getcurrentDate(),
+			authors: courseAuthors.map((author) => author.id),
 		};
 
 		if (areAllFieldsValid(objectCourse)) {
 			console.log(objectCourse);
+			onCreateCourse(objectCourse);
 			onCloseCreateCourse();
 		} else {
 			alert('Please fill all fields');
@@ -60,7 +55,9 @@ export const CreateCourse = ({ onCloseCreateCourse }) => {
 			!!objectCourse.description &&
 			objectCourse.description.length > 10 &&
 			!!objectCourse.duration &&
-			objectCourse.duration > 0
+			objectCourse.duration > 0 &&
+			!!objectCourse.authors &&
+			objectCourse.authors.length > 0
 		);
 	}
 
@@ -68,6 +65,18 @@ export const CreateCourse = ({ onCloseCreateCourse }) => {
 		let time = durationConverter(minutes);
 		return time;
 	}
+
+	const addAuthorToCourse = (author) => {
+		setCourseAuthors((authors) => [...authors, author]);
+		setAllAuthors((authors) => authors.filter((item) => item.id !== author.id));
+	};
+
+	const removeAuthorFromCourse = (author) => {
+		setAllAuthors((authors) => [...authors, author]);
+		setCourseAuthors((authors) =>
+			authors.filter((item) => item.id !== author.id)
+		);
+	};
 
 	return (
 		<div className='app__add-wrapper'>
@@ -105,13 +114,23 @@ export const CreateCourse = ({ onCloseCreateCourse }) => {
 						<h3>Add Author</h3>
 						<h4>Author name: </h4>
 						<Input
+							id='author-name'
 							placeholder='Enter author here...'
 							name='author'
 							className='add-author-input'
 							onChange={() => {}}
 						></Input>
 						<Button
-							onClick={() => {}}
+							onClick={() => {
+								const authorName = document.querySelector('#author-name').value;
+								if (!!authorName) {
+									const author = addAuthor(authorName);
+									console.log(author);
+									setAllAuthors((authors) => [...authors, author]);
+								} else {
+									alert('Invalid author name');
+								}
+							}}
 							text={BUTTON_CREATE_AUTHOR}
 							className='add-author-button'
 						></Button>
@@ -142,25 +161,20 @@ export const CreateCourse = ({ onCloseCreateCourse }) => {
 				</div>
 				<div className='add-current-author-section'>
 					<h3>Author</h3>
-					<div>
-						<ul>
-							{getAllAuthors().map((author) => {
-								return (
-									<li className='add-list-current-authors'>
-										<span>{author.name}</span>
-										<Button
-											className='add-author'
-											onClick={() => {}}
-											text={BUTTON_ADD_AUTHOR}
-										></Button>
-									</li>
-								);
-							})}
-						</ul>
+					<div className='current-list-authors'>
+						<AuthorsList
+							authorList={allAuthors}
+							buttonText={BUTTON_ADD_AUTHOR}
+							onClick={addAuthorToCourse}
+						/>
 					</div>
 					<div className='authors-list-section'>
 						<h3>Course Authors</h3>
-						<span>Author list is empty</span>
+						<AuthorsList
+							authorList={courseAuthors}
+							buttonText={BUTTON_DELETE_AUTHOR}
+							onClick={removeAuthorFromCourse}
+						/>
 					</div>
 				</div>
 			</div>
