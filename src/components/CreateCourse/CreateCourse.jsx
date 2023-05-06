@@ -6,6 +6,7 @@ import { Button } from '../../common/Button/Button';
 import { durationConverter } from '../../helpers/pipeDuration';
 
 import { getAllAuthors, addAuthor } from '../../helpers/authorsNaming';
+import { saveCourse } from '../../helpers/coursesService';
 import './createCourse.css';
 
 import {
@@ -17,7 +18,7 @@ import {
 } from '../../constants';
 import { AuthorsList } from './AuthorsList/AuthorsList';
 
-export const CreateCourse = ({ onCloseCreateCourse, onCreateCourse }) => {
+export const CreateCourse = ({ onCloseCreateCourse }) => {
 	const [dataCourse, setDataCourse] = useState({
 		duration: 0,
 		authors: [],
@@ -43,7 +44,7 @@ export const CreateCourse = ({ onCloseCreateCourse, onCreateCourse }) => {
 		if (missingFields) {
 			alert('Please fill all the missing fields:\n' + missingFields);
 		} else {
-			onCreateCourse(objectCourse);
+			saveCourse(objectCourse);
 			onCloseCreateCourse();
 		}
 	};

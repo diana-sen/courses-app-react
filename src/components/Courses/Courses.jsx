@@ -1,17 +1,20 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import CourseCard from './components/CourseCard/CourseCard';
 import { BUTTON_ADD_COURSE } from '../../constants';
 import { Button } from '../../common/Button/Button';
 import { SearchBar } from './components/SearchBar/SearchBar';
+import { getAllCourses } from '../../helpers/coursesService';
+
 import './courses.css';
 
-const Courses = ({ onAddCourse, coursesList }) => {
-	const [courses, setCourses] = useState(coursesList);
+const Courses = ({ onAddCourse }) => {
+	const allCoursesList = getAllCourses();
+	const [courses, setCourses] = useState(allCoursesList);
 	const [query, setQuery] = useState('');
 
 	const searchHandler = () => {
 		const keys = ['title', 'id'];
-		const searchResults = coursesList.filter((course) =>
+		const searchResults = allCoursesList.filter((course) =>
 			keys.some((key) =>
 				course[key].toLowerCase().includes(query.toLowerCase())
 			)
@@ -22,7 +25,7 @@ const Courses = ({ onAddCourse, coursesList }) => {
 	const updateKeywords = (e) => {
 		const value = e.target.value;
 		if (!value) {
-			setCourses(coursesList);
+			setCourses(allCoursesList);
 		}
 		setQuery(e.target.value);
 	};
