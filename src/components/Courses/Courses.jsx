@@ -1,5 +1,6 @@
 import { React, useState } from 'react';
 import CourseCard from './components/CourseCard/CourseCard';
+import { useNavigate } from 'react-router-dom';
 import { BUTTON_ADD_COURSE } from '../../constants';
 import { Button } from '../../common/Button/Button';
 import { SearchBar } from './components/SearchBar/SearchBar';
@@ -7,7 +8,8 @@ import { getAllCourses } from '../../helpers/coursesService';
 
 import './courses.css';
 
-const Courses = ({ onAddCourse }) => {
+const Courses = () => {
+	const navigate = useNavigate();
 	const allCoursesList = getAllCourses();
 	const [courses, setCourses] = useState(allCoursesList);
 	const [query, setQuery] = useState('');
@@ -33,13 +35,17 @@ const Courses = ({ onAddCourse }) => {
 		return <CourseCard key={course.id} course={course} />;
 	});
 
+	const goToAddCourse = () => {
+		navigate('./add');
+	};
+
 	return (
 		<div className='app__course-wrapper'>
 			<div className='app__bar'>
 				<SearchBar onClick={searchHandler} onChange={updateKeywords} />
 				<Button
 					className='app__button--show-course'
-					onClick={onAddCourse}
+					onClick={goToAddCourse}
 					text={BUTTON_ADD_COURSE}
 				></Button>
 			</div>

@@ -17,8 +17,11 @@ import {
 	BUTTON_CANCEL_COURSE,
 } from '../../constants';
 import { AuthorsList } from './AuthorsList/AuthorsList';
+import { useNavigate } from 'react-router';
 
-export const CreateCourse = ({ onCloseCreateCourse }) => {
+export const CreateCourse = () => {
+	const navigate = useNavigate();
+
 	const [dataCourse, setDataCourse] = useState({
 		duration: 0,
 		authors: [],
@@ -96,6 +99,10 @@ export const CreateCourse = ({ onCloseCreateCourse }) => {
 			alert('Invalid author name');
 		}
 	}, []);
+
+	const onCloseCreateCourse = () => {
+		navigate('/courses');
+	};
 
 	return (
 		<div className='app__add-wrapper'>
