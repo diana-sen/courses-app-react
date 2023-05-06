@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { React, useState } from 'react';
 import CourseCard from './components/CourseCard/CourseCard';
 import { BUTTON_ADD_COURSE } from '../../constants';
 import { Button } from '../../common/Button/Button';
