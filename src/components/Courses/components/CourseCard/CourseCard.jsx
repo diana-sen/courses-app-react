@@ -8,11 +8,13 @@ import { BUTTON_SHOW_COURSE } from '../../../../constants';
 import './courseCard.css';
 
 const CourseCard = ({ course }) => {
+	const authors = authorsNames(getAuthors(course.authors));
+
 	return (
 		<section className='app-section-card'>
 			<h2 className='app__card-title'>{course.title}</h2>
-			<h3 className='app__card-author'>
-				Author: {authorsNames(getAuthors(course.authors))}
+			<h3 className='app__card-author' title={authors}>
+				Author: {authors}
 			</h3>
 			<p className='app__card-description'>{course.description}</p>
 			<h3 className='app__card-duration'>

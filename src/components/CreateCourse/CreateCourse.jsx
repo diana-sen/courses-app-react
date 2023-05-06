@@ -39,32 +39,39 @@ export const CreateCourse = ({ onCloseCreateCourse, onCreateCourse }) => {
 			authors: courseAuthors.map((author) => author.id),
 		};
 
-		if (areAllFieldsValid(objectCourse)) {
-			console.log(objectCourse);
+		const missingFields = getMissingFields(objectCourse);
+		if (missingFields) {
+			alert('Please fill all the missing fields:\n' + missingFields);
+		} else {
 			onCreateCourse(objectCourse);
 			onCloseCreateCourse();
-		} else {
-			alert('Please fill all fields');
 		}
 	};
 
-	function areAllFieldsValid(objectCourse) {
-		return (
-			!!objectCourse.title &&
-			objectCourse.title.length > 1 &&
-			!!objectCourse.description &&
-			objectCourse.description.length > 10 &&
-			!!objectCourse.duration &&
-			objectCourse.duration > 0 &&
-			!!objectCourse.authors &&
-			objectCourse.authors.length > 0
-		);
-	}
+	const getMissingFields = (objectCourse) => {
+		let missingFields = '';
+		if (!objectCourse.title || objectCourse.title.length < 1) {
+			missingFields += '• Title: enter minimum 1 character\n';
+		}
 
-	function handleDuration(minutes) {
+		if (!objectCourse.description || objectCourse.description.length < 10) {
+			missingFields += '• Description: enter minimum 10 characters\n';
+		}
+
+		if (!objectCourse.duration || objectCourse.duration === 0) {
+			missingFields += '• Duration: enter a number greater than zero\n';
+		}
+
+		if (!objectCourse.authors || objectCourse.authors.length === 0) {
+			missingFields += '• Authors: select at least one author';
+		}
+		return missingFields;
+	};
+
+	const handleDuration = (minutes) => {
 		let time = durationConverter(minutes);
 		return time;
-	}
+	};
 
 	const addAuthorToCourse = useCallback((author) => {
 		setCourseAuthors((authors) => [...authors, author]);
@@ -72,11 +79,22 @@ export const CreateCourse = ({ onCloseCreateCourse, onCreateCourse }) => {
 	}, []);
 
 	const removeAuthorFromCourse = (author) => {
-		setAllAuthors([...allAuthors, author]);
 		setCourseAuthors((authors) =>
 			authors.filter((item) => item.id !== author.id)
 		);
+		setAllAuthors((authors) => [...authors, author]);
 	};
+
+	const addNewAuthor = useCallback(() => {
+		const authorName = document.querySelector('#author-name').value;
+		if (!!authorName) {
+			const author = addAuthor(authorName);
+			console.log(author);
+			setAllAuthors((authors) => [...new Set([...authors, author])]);
+		} else {
+			alert('Invalid author name');
+		}
+	}, []);
 
 	return (
 		<div className='app__add-wrapper'>
@@ -99,7 +117,8 @@ export const CreateCourse = ({ onCloseCreateCourse, onCreateCourse }) => {
 				<div className='app__add-description-section'>
 					<h3>Description: </h3>
 					<textarea
-						placeholder='text description here'
+						maxlength='500'
+						placeholder='Add course description. Maximum 500 characters'
 						id='course-description'
 						name='course-description'
 						rows='5'
@@ -121,16 +140,7 @@ export const CreateCourse = ({ onCloseCreateCourse, onCreateCourse }) => {
 							onChange={() => {}}
 						></Input>
 						<Button
-							onClick={() => {
-								const authorName = document.querySelector('#author-name').value;
-								if (!!authorName) {
-									const author = addAuthor(authorName);
-									console.log(author);
-									setAllAuthors((authors) => [...authors, author]);
-								} else {
-									alert('Invalid author name');
-								}
-							}}
+							onClick={addNewAuthor}
 							text={BUTTON_CREATE_AUTHOR}
 							className='add-author-button'
 						></Button>
@@ -148,14 +158,16 @@ export const CreateCourse = ({ onCloseCreateCourse, onCreateCourse }) => {
 									Number.isInteger(enteredValue * 1) ||
 									enteredValue == null
 								) {
-									setDataCourse({ ...dataCourse, duration: durationCourse });
-									console.log(e.nativeEvent.data);
+									setDataCourse((courseInfo) => ({
+										...courseInfo,
+										duration: Number.parseInt(durationCourse),
+									}));
 								} else {
-									console.log(durationCourse);
 									e.target.value = durationCourse.replace(enteredValue, '');
 								}
 							}}
 						></Input>
+						<label>minutes</label>
 						<h1>{handleDuration(dataCourse.duration)}</h1>
 					</div>
 				</div>

@@ -1,25 +1,20 @@
 .app-section-card {
     background: #474E68;
+
     color: whitesmoke;
     padding: 0px 10px 10px 20px;
     margin-top: 15px;
     margin-bottom: 15px;
     display: grid;
     grid-template-columns: 2fr 1fr;
-    grid-template-rows: repeat(5, .20fr);
     grid-template-areas: 
         "title  author "
         "title  duration"
         "description  creation"
-        "description  ."
         "description  button";
     border-radius: 10px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 
-}
-
-.app__button--show-course {
-    grid-area: button;
-    padding-left: 20%;
 }
 
 .app__card-description {
@@ -36,11 +31,7 @@
     grid-area: author;
     font-size: 14px;
     padding-left: 10%;
-    margin: 5px 0px;
-    /*
-    white-space: nowrap;
-    text-overflow: ellipsis; */
-    
+    margin: 4px 0px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -50,6 +41,7 @@
 }
 
 .app__card-duration {
+    margin: 4px 0px;
     grid-area: duration;
     font-size: 14px;
     padding-left: 10%;
@@ -59,4 +51,12 @@
     grid-area: creation;
     font-size: 14px;
     padding-left: 10%;
+    margin: 4px 0px;
 }
+
+.app__button--show-course {
+    grid-area: button;
+    margin-top: 20px;
+    padding-left: 20%;
+}
+

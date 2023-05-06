@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
 import CourseCard from './components/CourseCard/CourseCard';
-import { BUTTON_ADD_COURSE, mockedCoursesList } from '../../constants';
+import { BUTTON_ADD_COURSE } from '../../constants';
 import { Button } from '../../common/Button/Button';
 import { SearchBar } from './components/SearchBar/SearchBar';
 import './courses.css';

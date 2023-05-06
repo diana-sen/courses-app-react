@@ -19,11 +19,12 @@
     display: grid;
     width: 100%;
     grid-area: title-course;
-    grid-template-columns: 1fr 1fr ;
-    grid-template-rows: repeat(2,1fr) ;
+    grid-template-columns: 2fr 1fr ;
+    grid-template-rows: repeat(3, 1fr) ;
     grid-template-areas: 
-        "title course "
-        "description description ";
+        "title course"
+        "description description"
+        "description description";
     margin: auto;
     padding: 5px;
     text-align: left;
@@ -59,6 +60,22 @@
     margin-bottom: 30px;
 }
 
+.app__add-description-section textarea {
+    font-size: 16px;
+    font-family: inherit;
+    padding: 0.25em 0.5em;
+    background-color: #fff;
+    border: 2px solid var(--input-border);
+    border-radius: 4px;
+    transition: 180ms box-shadow ease-in-out;
+}
+
+.app__add-description-section textarea:focus {
+    border-color: #55c2d8;
+    box-shadow: 0 0 0 3px hsla(190, 63%, 59%, 0.8);
+    outline: 3px solid transparent;
+}
+
 .app__add-authors-section {
     background: #474E68;
     width: 100%;
@@ -66,7 +83,7 @@
     display: grid;
     grid-area: authors;
     text-align: center;
-    grid-template-columns: 1fr 1fr ;
+    grid-template-columns: 2fr 1fr ;
     grid-template-rows: 1fr ;
     grid-template-areas: 
         "add-author authors-list ";

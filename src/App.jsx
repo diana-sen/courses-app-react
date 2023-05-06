@@ -12,7 +12,7 @@ function App() {
 
 	const addNewCourse = (course) => {
 		const savedCourse = saveCourse(course);
-		setCoursesList((courses) => [...courses, savedCourse]);
+		setCoursesList((courses) => [...new Set([...courses, savedCourse])]);
 	};
 
 	if (addCourse) {

@@ -1,8 +1,6 @@
 .app-header {
     width: 100%;
-    background-color: rgb(181, 71, 165);
-    height: 30%;
-    /*min-height: 80px;*/
+    height: 30%;    
     display: grid;
     grid-template-columns: 0.1fr 2fr 1fr;
     border-color: rgb(181, 71, 165);
@@ -10,7 +8,9 @@
     border-style: solid;
     align-items: center;
     color:white;
-    
+    background: #cc2b5e;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #753a88, #cc2b5e);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #753a88, #cc2b5e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .app-logo {
