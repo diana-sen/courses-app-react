@@ -27,11 +27,7 @@ const Courses = ({ onAddCourse, coursesList }) => {
 		setQuery(e.target.value);
 	};
 	const courseCards = courses.map((course) => {
-		return (
-			<div>
-				<CourseCard course={course} />
-			</div>
-		);
+		return <CourseCard key={course.id} course={course} />;
 	});
 
 	return (

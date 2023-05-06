@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { Input } from '../../common/Input/Input';
 import { Button } from '../../common/Button/Button';
@@ -51,7 +51,7 @@ export const CreateCourse = ({ onCloseCreateCourse, onCreateCourse }) => {
 	function areAllFieldsValid(objectCourse) {
 		return (
 			!!objectCourse.title &&
-			objectCourse.title.length > 2 &&
+			objectCourse.title.length > 1 &&
 			!!objectCourse.description &&
 			objectCourse.description.length > 10 &&
 			!!objectCourse.duration &&
@@ -66,13 +66,13 @@ export const CreateCourse = ({ onCloseCreateCourse, onCreateCourse }) => {
 		return time;
 	}
 
-	const addAuthorToCourse = (author) => {
+	const addAuthorToCourse = useCallback((author) => {
 		setCourseAuthors((authors) => [...authors, author]);
 		setAllAuthors((authors) => authors.filter((item) => item.id !== author.id));
-	};
+	}, []);
 
 	const removeAuthorFromCourse = (author) => {
-		setAllAuthors((authors) => [...authors, author]);
+		setAllAuthors([...allAuthors, author]);
 		setCourseAuthors((authors) =>
 			authors.filter((item) => item.id !== author.id)
 		);
