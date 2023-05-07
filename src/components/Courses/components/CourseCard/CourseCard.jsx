@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../../../../common/Button/Button';
 import { durationConverter } from '../../../../helpers/pipeDuration';
 import { getAuthors } from '../../../../helpers/authorsNaming';
@@ -8,7 +9,12 @@ import { BUTTON_SHOW_COURSE } from '../../../../constants';
 import './courseCard.css';
 
 const CourseCard = ({ course }) => {
+	const navigate = useNavigate();
 	const authors = authorsNames(getAuthors(course.authors));
+
+	const goToCourseInfo = () => {
+		navigate(`./${course.id}`);
+	};
 
 	return (
 		<section className='app-section-card'>
@@ -25,6 +31,7 @@ const CourseCard = ({ course }) => {
 				<Button
 					className='app__button--show-course'
 					text={BUTTON_SHOW_COURSE}
+					onClick={goToCourseInfo}
 				></Button>
 			</div>
 		</section>

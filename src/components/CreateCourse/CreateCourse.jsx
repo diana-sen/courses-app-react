@@ -33,8 +33,6 @@ export const CreateCourse = () => {
 	const createCourse = () => {
 		const title = document.querySelector('#title')?.value;
 		const description = document.querySelector('#course-description')?.value;
-		console.log(title);
-		console.log(description);
 
 		const objectCourse = {
 			...dataCourse,
@@ -125,7 +123,7 @@ export const CreateCourse = () => {
 				<div className='app__add-description-section'>
 					<h3>Description: </h3>
 					<textarea
-						maxlength='500'
+						maxLength='500'
 						placeholder='Add course description. Maximum 500 characters'
 						id='course-description'
 						name='course-description'

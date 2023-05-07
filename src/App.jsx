@@ -3,10 +3,11 @@ import { Route, Routes } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Courses from './components/Courses/Courses';
 import { CreateCourse } from './components/CreateCourse/CreateCourse';
+import { CourseInfo } from './components/Courses/components/CourseInfo/CourseInfo';
 import './App.css';
 
-import { Login } from './pages/Login/Login';
-import { Registration } from './pages/Registration/Registration';
+import { Login } from './components/Login/Login';
+import { Registration } from './components/Registration/Registration';
 
 function App() {
 	return (
@@ -14,6 +15,7 @@ function App() {
 			<Header />
 			<Routes>
 				<Route path='/courses' element={<Courses />}></Route>
+				<Route path='/courses/:courseId' element={<CourseInfo />}></Route>
 				<Route
 					path='/courses/add'
 					element={<CreateCourse></CreateCourse>}
