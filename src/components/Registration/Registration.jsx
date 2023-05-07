@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
-import './registration.css';
+import { Link, useNavigate } from 'react-router-dom';
+
 import { Input } from '../../common/Input/Input';
 import { Button } from '../../common/Button/Button';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+
+import { registerUserService } from '../../services/authService';
+
 import { BUTTON_REGISTER } from '../../constants';
+
+import './registration.css';
 
 export const Registration = () => {
 	const [nameErrorMessage, setNameErrorMessage] = useState('');
 	const [emailErrorMessage, setEmailErrorMessage] = useState('');
 	const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
-	const { location } = useLocation();
 	const navigate = useNavigate();
 
-	const register = (e) => {
+	const register = async (e) => {
 		e.preventDefault();
 
 		const name = document.querySelector('#name').value;
@@ -23,11 +27,17 @@ export const Registration = () => {
 		const credentials = { name, email, password };
 
 		if (validateForm(credentials)) {
-			if (!location) {
-				navigate('/login');
-			} else {
-				navigate('/registration');
-			}
+			await registerUserService(credentials)
+				.then(() => {
+					navigate('/login');
+				})
+				.catch((error) => {
+					if (error.response) {
+						alert(error.response.data.errors);
+					} else {
+						alert('Unable to register');
+					}
+				});
 		}
 	};
 
