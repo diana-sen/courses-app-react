@@ -1,14 +1,36 @@
 import React from 'react';
 import './input.css';
 
-export const Input = ({ id, className, placeholderText, onChange }) => {
+export const Input = ({
+	id,
+	className,
+	placeholderText,
+	onChange,
+	type,
+	errorMessage,
+}) => {
+	if (!type) {
+		type = 'text';
+	}
+
+	const ErrorLabel = () => {
+		return errorMessage ? (
+			<label className='error-message'>{errorMessage}</label>
+		) : undefined;
+	};
+
+	let classNames = errorMessage ? `${className} input-error` : className;
+
 	return (
-		<input
-			id={id}
-			type='text'
-			className={className}
-			placeholder={placeholderText}
-			onChange={onChange}
-		></input>
+		<div className='input-common'>
+			<input
+				id={id}
+				type={type}
+				className={classNames}
+				placeholder={placeholderText}
+				onChange={onChange}
+			></input>
+			<ErrorLabel />
+		</div>
 	);
 };

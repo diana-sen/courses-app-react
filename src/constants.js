@@ -8,6 +8,8 @@ export const BUTTON_ADD_COURSE = 'Add new course';
 export const BUTTON_SHOW_COURSE = 'Show course';
 export const BUTTON_CANCEL_COURSE = 'Cancel';
 export const BUTTON_BACK_TO_COURSES = 'Back to courses';
+export const BUTTON_LOGIN = 'Login';
+export const BUTTON_REGISTER = 'Register';
 
 export const mockedCoursesList = [
 	{

@@ -7,10 +7,23 @@ input {
     border: 2px solid var(--input-border);
     border-radius: 4px;
     transition: 180ms box-shadow ease-in-out;
+    display: flex;
+    flex-direction: column;
 }
 
-input:focus {
+.input-common input:focus {
     border-color: #55c2d8;
     box-shadow: 0 0 0 3px hsla(190, 63%, 59%, 0.8);
     outline: 3px solid transparent;
+}
+
+.input-common .input-error {
+    border-color: hsl(0, 63%, 59%);
+    box-shadow: 0 0 0 3px hsla(0, 63%, 59%, 0.8);
+    outline: 3px solid transparent;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
 }

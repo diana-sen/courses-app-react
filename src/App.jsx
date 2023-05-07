@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Courses from './components/Courses/Courses';
 import { CreateCourse } from './components/CreateCourse/CreateCourse';
@@ -22,6 +22,7 @@ function App() {
 				></Route>
 				<Route path='/registration' element={<Registration />}></Route>
 				<Route path='/login' element={<Login />}></Route>
+				<Route path='*' element={<Navigate to='/courses'></Navigate>}></Route>
 			</Routes>
 		</div>
 	);
