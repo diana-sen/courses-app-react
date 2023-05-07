@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
-import './login.css';
+import { Link, useNavigate } from 'react-router-dom';
+
 import { Input } from '../../common/Input/Input';
 import { Button } from '../../common/Button/Button';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+
+import { loginUserService } from '../../services/authService';
 import { BUTTON_LOGIN } from '../../constants';
+
+import './login.css';
 
 export const Login = () => {
 	const [emailErrorMessage, setEmailErrorMessage] = useState('');
 	const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
-	const { location } = useLocation();
 	const navigate = useNavigate();
 
-	const login = (e) => {
+	const login = async (e) => {
 		e.preventDefault();
 		const email = document.querySelector('#email').value;
 		const password = document.querySelector('#password').value;
@@ -20,11 +23,21 @@ export const Login = () => {
 		const credentials = { email, password };
 
 		if (validateForm(credentials)) {
-			if (!location) {
-				navigate('/courses');
-			} else {
-				navigate('/login');
-			}
+			await loginUserService(credentials)
+				.then((response) => {
+					const token = response.data.result;
+					window.localStorage.setItem('token', token);
+					const userName = response.data.user.name;
+					window.localStorage.setItem('userName', userName);
+					navigate('/courses');
+				})
+				.catch((error) => {
+					if (error.response) {
+						alert('Unable to log in.\nInvalid password');
+					} else {
+						alert('Unable to log in.\nAn error occurred');
+					}
+				});
 		}
 	};
 
