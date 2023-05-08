@@ -5,14 +5,20 @@ import { Button } from '../../common/Button/Button.jsx';
 import { BUTTON_LOGOUT } from '../../constants';
 import { AuthContext } from '../../context/AuthContextProvider';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { userLoggedOut } from '../../store/user/actionCreators';
 
 function Header() {
 	const { isAuthenticated, user, logOut } = useContext(AuthContext);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const logOutUser = () => {
-		navigate('/login');
 		logOut();
+		window.localStorage.removeItem('token');
+		window.localStorage.removeItem('userName');
+		dispatch(userLoggedOut());
+		navigate('/login');
 	};
 
 	const UserSection = () => {

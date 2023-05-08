@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import { AuthContext } from '../../context/AuthContextProvider';
 
@@ -7,6 +8,8 @@ import { Input } from '../../common/Input/Input';
 import { Button } from '../../common/Button/Button';
 
 import { loginUserService } from '../../services/authService';
+
+import { userLoggedIn } from '../../store/user/actionCreators';
 
 import { BUTTON_LOGIN } from '../../constants';
 import './login.css';
@@ -16,6 +19,7 @@ export const Login = () => {
 	const [emailErrorMessage, setEmailErrorMessage] = useState('');
 	const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		if (isAuthenticated) {
@@ -32,9 +36,7 @@ export const Login = () => {
 		if (validateForm(credentials)) {
 			await loginUserService(credentials)
 				.then((response) => {
-					const token = response.data.result;
-					const userName = response.data.user.name;
-					loginUser(token, userName);
+					storeLoginInfo(response.data);
 					navigate('/courses');
 				})
 				.catch((error) => {
@@ -47,6 +49,16 @@ export const Login = () => {
 					}
 				});
 		}
+	};
+
+	const storeLoginInfo = (userData) => {
+		const token = userData.result;
+		const name = userData.user.name;
+		const email = userData.user.email;
+		window.localStorage.setItem('token', token);
+		window.localStorage.setItem('userName', name);
+		loginUser(token, name);
+		dispatch(userLoggedIn({ name, email, token }));
 	};
 
 	const validateForm = (credentials) => {

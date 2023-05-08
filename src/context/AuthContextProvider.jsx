@@ -10,16 +10,13 @@ export function AuthContextProvider({ children }) {
 	);
 	const [user, setUser] = useState(window.localStorage.getItem('userName'));
 
+	//Partial migration of functionality to Login and Header components to use redux hooks
 	const loginUser = useCallback((token, userName) => {
-		window.localStorage.setItem('token', token);
-		window.localStorage.setItem('userName', userName);
 		setUser(userName);
 		setIsAuthenticated(true);
 	}, []);
 
 	const logOut = useCallback(() => {
-		window.localStorage.removeItem('token');
-		window.localStorage.removeItem('userName');
 		setIsAuthenticated(false);
 		setUser(null);
 	}, []);

@@ -6,9 +6,9 @@ import { combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
 
 const rootReducer = combineReducers({
-	userReducer,
-	coursesReducer,
-	authorsReducer,
+	user: userReducer,
+	courses: coursesReducer,
+	authors: authorsReducer,
 });
 
 const store = configureStore({ reducer: rootReducer });
