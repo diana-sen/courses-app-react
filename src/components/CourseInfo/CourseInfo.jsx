@@ -1,10 +1,13 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getCoursebyId } from '../../../../helpers/coursesService';
-import { Button } from '../../../../common/Button/Button';
-import { durationConverter } from '../../../../helpers/pipeDuration';
-import { getAuthors } from '../../../../helpers/authorsNaming';
-import { BUTTON_BACK_TO_COURSES } from '../../../../constants';
+
+import { Button } from '../../common/Button/Button';
+
+import { getCoursebyId } from '../../helpers/coursesService';
+import { durationConverter } from '../../helpers/pipeDuration';
+import { getAuthors } from '../../helpers/authorsNaming';
+
+import { BUTTON_BACK_TO_COURSES } from '../../constants';
 import './courseInfo.css';
 
 export const CourseInfo = () => {

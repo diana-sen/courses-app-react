@@ -1,14 +1,15 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+import { AuthContext } from '../../context/AuthContextProvider';
+
 import { Input } from '../../common/Input/Input';
 import { Button } from '../../common/Button/Button';
 
 import { loginUserService } from '../../services/authService';
-import { BUTTON_LOGIN } from '../../constants';
 
+import { BUTTON_LOGIN } from '../../constants';
 import './login.css';
-import { AuthContext } from '../../context/AuthContextProvider';
 
 export const Login = () => {
 	const { isAuthenticated, loginUser } = useContext(AuthContext);

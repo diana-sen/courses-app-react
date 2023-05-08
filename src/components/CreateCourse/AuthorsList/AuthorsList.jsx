@@ -1,8 +1,6 @@
 import React from 'react';
 import { Button } from '../../../common/Button/Button';
 
-//import './authorsList.css';
-
 export const AuthorsList = ({ authorList, buttonText, onClick }) => {
 	return (
 		<ul>

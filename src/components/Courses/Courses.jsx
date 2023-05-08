@@ -1,11 +1,13 @@
 import { React, useState } from 'react';
-import CourseCard from './components/CourseCard/CourseCard';
 import { useNavigate } from 'react-router-dom';
-import { BUTTON_ADD_COURSE } from '../../constants';
+
+import CourseCard from './components/CourseCard/CourseCard';
 import { Button } from '../../common/Button/Button';
 import { SearchBar } from './components/SearchBar/SearchBar';
+
 import { getAllCourses } from '../../helpers/coursesService';
 
+import { BUTTON_ADD_COURSE } from '../../constants';
 import './courses.css';
 
 const Courses = () => {
