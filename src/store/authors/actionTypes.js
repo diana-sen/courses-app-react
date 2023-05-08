@@ -1,2 +1,2 @@
-export const AUTHORS_SAVE_ALL = '@authors/saveAll';
-export const AUTHORS_SAVE = '@authors/save';
+export const AUTHORS_ADD_ALL = '@authors/addAll';
+export const AUTHORS_ADD = '@authors/add';

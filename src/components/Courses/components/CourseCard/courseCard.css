@@ -53,9 +53,39 @@
     margin: 4px 0px;
 }
 
-.app__button--show-course {
+.app__course-card--buttons {
     grid-area: button;
     margin-top: 20px;
-    padding-left: 20%;
+    padding-left: 10%;
 }
 
+.app__course-card--button {
+    margin: 4px 2px;
+}
+
+.app__button--edit-course, .app__button--remove-course {
+    width: 40px;
+}
+
+.app__button--edit-course > img {
+    height: 12px;
+    width: 12px;
+    
+}
+
+.app__button--remove-course > img {
+    height: 12px;
+    width: 12px;
+}
+
+@media screen and (max-width: 830px) {
+    .app__course-card--buttons {
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .app__course-card--buttons > button {
+        width: 120px;
+    }
+}

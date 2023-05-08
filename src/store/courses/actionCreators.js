@@ -1,21 +1,21 @@
-import { COURSES_SAVE, COURSES_SAVE_ALL } from './actionTypes';
+import * as actions from './actionTypes';
 
-export const saveAllCourses = (courses) => ({
-	type: COURSES_SAVE_ALL,
+export const addAllCourses = (courses) => ({
+	type: actions.COURSES_ADD_ALL,
 	payload: courses,
 });
 
-export const saveCourse = (course) => ({
-	type: COURSES_SAVE,
+export const addCourse = (course) => ({
+	type: actions.COURSES_ADD,
 	payload: course,
 });
 
 export const deleteCourse = (courseId) => ({
-	type: COURSES_SAVE_ALL,
+	type: actions.COURSES_DELETE,
 	payload: courseId,
 });
 
 export const updateCourse = (course) => ({
-	type: COURSES_SAVE,
+	type: actions.COURSES_UPDATE,
 	payload: course,
 });

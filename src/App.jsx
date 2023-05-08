@@ -14,6 +14,8 @@ import { PrivateRoute } from './components/Router/PrivateRoute';
 import { PublicRoute } from './components/Router/PublicRouter';
 
 import './App.css';
+import { getAllAuthors } from './services/authorsService';
+import { addAllAuthors } from './store/authors/actionCreators';
 
 function App() {
 	const dispatch = useDispatch();
@@ -27,7 +29,20 @@ function App() {
 		}
 	};
 
+	const retrieveAllAuthors = () => {
+		getAllAuthors()
+			.then((response) => {
+				const authors = response.data.result;
+				dispatch(addAllAuthors(authors));
+				console.log(authors);
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	};
+
 	updateStore();
+	retrieveAllAuthors();
 
 	return (
 		<div id='app-container'>

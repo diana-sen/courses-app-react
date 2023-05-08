@@ -1,11 +1,12 @@
 import { mockedAuthorsList } from '../constants';
 import { v4 as uuid4 } from 'uuid';
 
-export function getAuthors(authorsId) {
+export function getAuthors(authorsIds) {
 	let authors = mockedAuthorsList.filter((author) =>
-		authorsId.includes(author.id)
+		authorsIds.includes(author.id)
 	);
-
+	console.log('Estos autores son de getAuthors:');
+	console.log(authors);
 	return authors;
 }
 

@@ -12,7 +12,7 @@ import './courses.css';
 
 const Courses = () => {
 	const navigate = useNavigate();
-	const allCoursesList = getAllCourses();
+	const allCoursesList = getAllCourses(); //migrate to store
 	const [courses, setCourses] = useState(allCoursesList);
 	const [query, setQuery] = useState('');
 

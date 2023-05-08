@@ -1,11 +1,14 @@
 import React, { useCallback, useState } from 'react';
 
+import store from '../../store';
+
 import { Input } from '../../common/Input/Input';
 import { Button } from '../../common/Button/Button';
 
 import { durationConverter } from '../../helpers/pipeDuration';
 
-import { getAllAuthors, addAuthor } from '../../helpers/authorsNaming';
+import { addAuthor } from '../../helpers/authorsNaming';
+
 import { saveCourse } from '../../helpers/coursesService';
 import './createCourse.css';
 
@@ -18,17 +21,29 @@ import {
 } from '../../constants';
 import { AuthorsList } from './AuthorsList/AuthorsList';
 import { useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAuthorsSelector } from '../../store/selectors';
+import { saveAuthor } from '../../store/authors/actionCreators';
 
 export const CreateCourse = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const [dataCourse, setDataCourse] = useState({
 		duration: 0,
 		authors: [],
 	});
 
-	const [allAuthors, setAllAuthors] = useState(getAllAuthors());
+	const [allAuthors, setAllAuthors] = useState(useSelector(getAuthorsSelector));
 	const [courseAuthors, setCourseAuthors] = useState([]);
+	store.subscribe(() => {
+		const authors = store.getState().authors;
+		const courseAuthorsIds = courseAuthors.map((author) => author.id);
+		console.log(courseAuthorsIds);
+		setAllAuthors(
+			authors.filter((author) => !courseAuthorsIds.includes(author.id))
+		);
+	});
 
 	const createCourse = () => {
 		const title = document.querySelector('#title')?.value;
@@ -91,12 +106,12 @@ export const CreateCourse = () => {
 		const authorName = document.querySelector('#author-name').value;
 		if (!!authorName) {
 			const author = addAuthor(authorName);
-			console.log(author);
-			setAllAuthors((authors) => [...new Set([...authors, author])]);
+			dispatch(saveAuthor(author));
+			//setAllAuthors((authors) => [...new Set([...authors, author])]);
 		} else {
 			alert('Invalid author name');
 		}
-	}, []);
+	}, [dispatch]);
 
 	const onCloseCreateCourse = () => {
 		navigate('/courses');
