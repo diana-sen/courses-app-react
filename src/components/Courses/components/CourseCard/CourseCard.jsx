@@ -1,15 +1,21 @@
 import React from 'react';
-
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { Button } from '../../../../common/Button/Button';
+
 import { durationConverter } from '../../../../helpers/pipeDuration';
-import { getAuthors } from '../../../../helpers/authorsNaming';
+//import { getAuthors } from '../../../../helpers/authorsNaming';
+
 import { BUTTON_SHOW_COURSE } from '../../../../constants';
 
 import './courseCard.css';
+import { getAuthorsSelector } from '../../../../store/selectors';
+import { deleteCourse } from '../../../../store/courses/actionCreators';
 
 const CourseCard = ({ course }) => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const authorsNames = (authors) => {
 		let names = authors
@@ -20,10 +26,19 @@ const CourseCard = ({ course }) => {
 			);
 		return names;
 	};
-	const authors = authorsNames(getAuthors(course.authors));
+	// const authors = authorsNames(getAuthors(course.authors)); //migrate to store
+	const authors = authorsNames(
+		useSelector(getAuthorsSelector).filter((author) =>
+			course.authors.includes(author.id)
+		)
+	);
 
 	const goToCourseInfo = () => {
 		navigate(`./${course.id}`);
+	};
+
+	const deleteCourseCard = () => {
+		dispatch(deleteCourse(course.id));
 	};
 
 	return (
@@ -52,7 +67,7 @@ const CourseCard = ({ course }) => {
 				<Button
 					className='app__course-card--button app__button--remove-course'
 					text={<img src='/remove-icon-white.svg' alt='Remove' />}
-					onClick={goToCourseInfo}
+					onClick={deleteCourseCard}
 				></Button>
 			</div>
 		</section>

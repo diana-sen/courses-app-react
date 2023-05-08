@@ -24,6 +24,7 @@ import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAuthorsSelector } from '../../store/selectors';
 import { saveAuthor } from '../../store/authors/actionCreators';
+import { addCourse } from '../../store/courses/actionCreators';
 
 export const CreateCourse = () => {
 	const navigate = useNavigate();
@@ -39,7 +40,6 @@ export const CreateCourse = () => {
 	store.subscribe(() => {
 		const authors = store.getState().authors;
 		const courseAuthorsIds = courseAuthors.map((author) => author.id);
-		console.log(courseAuthorsIds);
 		setAllAuthors(
 			authors.filter((author) => !courseAuthorsIds.includes(author.id))
 		);
@@ -60,7 +60,8 @@ export const CreateCourse = () => {
 		if (missingFields) {
 			alert('Please fill all the missing fields:\n' + missingFields);
 		} else {
-			saveCourse(objectCourse);
+			const newSavedCourse = saveCourse(objectCourse);
+			dispatch(addCourse(newSavedCourse));
 			onCloseCreateCourse();
 		}
 	};
