@@ -1,15 +1,15 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:4000';
+import {
+	BASE_URL,
+	REGISTER_ENDPOINT,
+	LOGIN_ENDPOINT,
+} from './servicesConstants';
 
 // Users
-const registerUserService = (data) => axios.post(`${BASE_URL}/register`, data);
-const loginUserService = (data) => axios.post(`${BASE_URL}/login`, data);
+const registerUserService = (data) =>
+	axios.post(`${BASE_URL}${REGISTER_ENDPOINT}`, data);
+const loginUserService = (data) =>
+	axios.post(`${BASE_URL}${LOGIN_ENDPOINT}`, data);
 
 export { registerUserService, loginUserService };
-
-/*const config = {
-  headers: { Authorization: `${token}` }
-}
-//const getDataUser = (id) => axios.get(`${BASE_URL}/user/{${id}`, config)
-*/
