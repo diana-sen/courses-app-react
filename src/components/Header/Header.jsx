@@ -1,31 +1,33 @@
-import React, { useContext } from 'react';
-import './header.css';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { userLoggedOut } from '../../store/user/actionCreators';
+import { getUserSelector } from '../../store/selectors';
+
 import Logo from './components/Logo/Logo.jsx';
 import { Button } from '../../common/Button/Button.jsx';
+
 import { BUTTON_LOGOUT } from '../../constants';
-import { AuthContext } from '../../context/AuthContextProvider';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { userLoggedOut } from '../../store/user/actionCreators';
+import './header.css';
 
 function Header() {
-	const { isAuthenticated, user, logOut } = useContext(AuthContext);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
 	const logOutUser = () => {
-		logOut();
 		window.localStorage.removeItem('token');
 		window.localStorage.removeItem('userName');
 		dispatch(userLoggedOut());
 		navigate('/login');
 	};
 
+	const user = useSelector(getUserSelector);
 	const UserSection = () => {
-		if (isAuthenticated) {
+		if (user.isAuth) {
 			return (
 				<section className='app-user-name'>
-					<div>{user}</div>
+					<div>{user.name}</div>
 					<Button text={BUTTON_LOGOUT} onClick={logOutUser} />
 				</section>
 			);

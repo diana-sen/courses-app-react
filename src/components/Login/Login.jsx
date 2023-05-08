@@ -1,8 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { AuthContext } from '../../context/AuthContextProvider';
+import { getUserSelector } from '../../store/selectors';
 
 import { Input } from '../../common/Input/Input';
 import { Button } from '../../common/Button/Button';
@@ -15,14 +15,16 @@ import { BUTTON_LOGIN } from '../../constants';
 import './login.css';
 
 export const Login = () => {
-	const { isAuthenticated, loginUser } = useContext(AuthContext);
+	//const { isAuthenticated, loginUser } = useContext(AuthContext);
 	const [emailErrorMessage, setEmailErrorMessage] = useState('');
 	const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
+	const user = useSelector(getUserSelector);
+
 	useEffect(() => {
-		if (isAuthenticated) {
+		if (user.isAuth) {
 			navigate('/courses');
 		}
 	});
@@ -57,7 +59,7 @@ export const Login = () => {
 		const email = userData.user.email;
 		window.localStorage.setItem('token', token);
 		window.localStorage.setItem('userName', name);
-		loginUser(token, name);
+
 		dispatch(userLoggedIn({ name, email, token }));
 	};
 
