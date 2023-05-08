@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { Input } from '../../common/Input/Input';
@@ -8,30 +8,37 @@ import { loginUserService } from '../../services/authService';
 import { BUTTON_LOGIN } from '../../constants';
 
 import './login.css';
+import { AuthContext } from '../../context/AuthContextProvider';
 
 export const Login = () => {
+	const { isAuthenticated, loginUser } = useContext(AuthContext);
 	const [emailErrorMessage, setEmailErrorMessage] = useState('');
 	const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
-
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (isAuthenticated) {
+			navigate('/courses');
+		}
+	});
 
 	const login = async (e) => {
 		e.preventDefault();
 		const email = document.querySelector('#email').value;
 		const password = document.querySelector('#password').value;
-
 		const credentials = { email, password };
 
 		if (validateForm(credentials)) {
 			await loginUserService(credentials)
 				.then((response) => {
 					const token = response.data.result;
-					window.localStorage.setItem('token', token);
 					const userName = response.data.user.name;
-					window.localStorage.setItem('userName', userName);
+					loginUser(token, userName);
 					navigate('/courses');
 				})
 				.catch((error) => {
+					console.log(error);
+					console.log(error.message);
 					if (error.response) {
 						alert('Unable to log in.\nInvalid password');
 					} else {

@@ -9,7 +9,6 @@ export function getAllCourses() {
 
 export function saveCourse(courseData) {
 	const course = { id: uuid4(), ...courseData, creationDate: getcurrentDate() };
-
 	mockedCoursesList.push(course);
 
 	return course;
@@ -20,6 +19,5 @@ export function getCoursebyId(courseId) {
 		(course) => course.id === courseId
 	);
 
-	//console.log(foundCourse);
 	return foundCourse;
 }
