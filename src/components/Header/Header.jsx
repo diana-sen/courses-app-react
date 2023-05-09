@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { userLoggedOut } from '../../store/user/actionCreators';
 import { getUserSelector } from '../../store/selectors';
 
 import Logo from './components/Logo/Logo.jsx';
@@ -10,15 +9,15 @@ import { Button } from '../../common/Button/Button.jsx';
 
 import { BUTTON_LOGOUT } from '../../constants';
 import './header.css';
+import { logout } from '../../store/user/thunk';
 
 function Header() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
 	const logOutUser = () => {
+		dispatch(logout());
 		window.localStorage.removeItem('token');
-		window.localStorage.removeItem('userName');
-		dispatch(userLoggedOut());
 		navigate('/login');
 	};
 

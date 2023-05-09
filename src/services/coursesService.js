@@ -3,6 +3,7 @@ import axios from 'axios';
 import {
 	ALL_COURSES_ENDPOINT,
 	BASE_URL,
+	COURSE_ENDPOINT,
 	SAVE_NEW_COURSE_ENDPOINT,
 } from './servicesConstants';
 
@@ -28,4 +29,23 @@ const saveNewCourse = async (course) => {
 	return response.data.result;
 };
 
-export { getAllCourses, saveNewCourse };
+const updateCourse = async (course) => {
+	const response = await axios.put(
+		`${BASE_URL}${COURSE_ENDPOINT}/${course.id}`,
+		course,
+		getHeaders()
+	);
+
+	return response.data.result;
+};
+
+const deleteCourse = async (courseId) => {
+	const response = await axios.delete(
+		`${BASE_URL}${COURSE_ENDPOINT}/${courseId}`,
+		getHeaders()
+	);
+
+	return response.data.result;
+};
+
+export { getAllCourses, saveNewCourse, updateCourse, deleteCourse };

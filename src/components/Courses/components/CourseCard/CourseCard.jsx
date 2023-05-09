@@ -7,11 +7,12 @@ import { Button } from '../../../../common/Button/Button';
 import { durationConverter } from '../../../../helpers/pipeDuration';
 //import { getAuthors } from '../../../../helpers/authorsNaming';
 
+import { getAuthorsSelector } from '../../../../store/selectors';
+import { deleteCourseThunk } from '../../../../store/courses/thunk';
+
 import { BUTTON_SHOW_COURSE } from '../../../../constants';
 
 import './courseCard.css';
-import { getAuthorsSelector } from '../../../../store/selectors';
-import { deleteCourse } from '../../../../store/courses/actionCreators';
 
 const CourseCard = ({ course, isAdmin }) => {
 	const navigate = useNavigate();
@@ -42,7 +43,8 @@ const CourseCard = ({ course, isAdmin }) => {
 	};
 
 	const deleteCourseCard = () => {
-		dispatch(deleteCourse(course.id));
+		dispatch(deleteCourseThunk(course.id));
+		//dispatch(deleteCourse(course.id));
 	};
 
 	const AdminButtons = () => {
