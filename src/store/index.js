@@ -11,6 +11,7 @@ const rootReducer = combineReducers({
 	authors: authorsReducer,
 });
 
+// thunk middleware is automatically added by configureStore *
 const store = configureStore({ reducer: rootReducer });
 
 export default store;

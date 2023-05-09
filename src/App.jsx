@@ -12,6 +12,7 @@ import { Login } from './components/Login/Login';
 import { Registration } from './components/Registration/Registration';
 import { PrivateRoute } from './components/Router/PrivateRoute';
 import { PublicRoute } from './components/Router/PublicRouter';
+import { PrivateAdminRoute } from './components/Router/PrivateAdminRoute';
 
 import { addAllCourses } from './store/courses/actionCreators';
 import { addAllAuthors } from './store/authors/actionCreators';
@@ -26,9 +27,11 @@ function App() {
 	const updateStore = () => {
 		const token = window.localStorage.getItem('token');
 		if (token) {
-			const name = window.localStorage.getItem('userName');
-			const email = window.localStorage.getItem('email');
-			dispatch(userLoggedIn({ name, email, token }));
+			//get this data from /users/me
+			const name = 'Mikey';
+			const email = 'testingemail@gmail.com';
+			const role = 'user';
+			dispatch(userLoggedIn({ name, email, token, role }));
 		}
 	};
 
@@ -66,6 +69,12 @@ function App() {
 					<Route index element={<Courses />}></Route>
 					<Route path=':courseId' element={<CourseInfo />}></Route>
 					<Route path='add' element={<CourseForm />}></Route>
+				</Route>
+				<Route path='/courses/add' element={<PrivateAdminRoute />}>
+					<Route index element={<CourseForm />}></Route>
+				</Route>
+				<Route path='/courses/update' element={<PrivateAdminRoute />}>
+					<Route path=':courseId' element={<CourseForm />}></Route>
 				</Route>
 				<Route path='/' element={<PublicRoute />}>
 					<Route index element={<Login />}></Route>

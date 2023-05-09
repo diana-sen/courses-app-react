@@ -10,9 +10,9 @@ import { SearchBar } from './components/SearchBar/SearchBar';
 
 //import { getAllCourses } from '../../helpers/coursesService';
 
-import { BUTTON_ADD_COURSE } from '../../constants';
+import { ADMIN_ROLE, BUTTON_ADD_COURSE } from '../../constants';
 import './courses.css';
-import { getCoursesSelector } from '../../store/selectors';
+import { getCoursesSelector, getUserRoleSelector } from '../../store/selectors';
 
 const Courses = () => {
 	const navigate = useNavigate();
@@ -20,6 +20,7 @@ const Courses = () => {
 	//const [courses, setCourses] = useState(allCoursesList); // migrate to store:
 	const [courses, setCourses] = useState(useSelector(getCoursesSelector));
 	const [query, setQuery] = useState('');
+	const isAdmin = useSelector(getUserRoleSelector) === ADMIN_ROLE;
 
 	store.subscribe(() => {
 		const courses = store.getState().courses;
@@ -46,22 +47,28 @@ const Courses = () => {
 		setQuery(e.target.value);
 	};
 	const courseCards = courses.map((course) => {
-		return <CourseCard key={course.id} course={course} />;
+		return <CourseCard key={course.id} course={course} isAdmin={isAdmin} />;
 	});
 
 	const goToAddCourse = () => {
 		navigate('./add');
 	};
 
+	const AddCourseButton = () => {
+		return useSelector(getUserRoleSelector) === ADMIN_ROLE ? (
+			<Button
+				className='app__button--show-course'
+				onClick={goToAddCourse}
+				text={BUTTON_ADD_COURSE}
+			></Button>
+		) : undefined;
+	};
+
 	return (
 		<div className='app__course-wrapper'>
 			<div className='app__bar'>
 				<SearchBar onClick={searchHandler} onChange={updateKeywords} />
-				<Button
-					className='app__button--show-course'
-					onClick={goToAddCourse}
-					text={BUTTON_ADD_COURSE}
-				></Button>
+				<AddCourseButton />
 			</div>
 
 			<section>{courseCards}</section>

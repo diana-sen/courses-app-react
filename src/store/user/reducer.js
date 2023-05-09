@@ -5,6 +5,7 @@ const userInitialState = {
 	name: '',
 	email: '',
 	token: '',
+	role: '',
 };
 
 export const userReducer = (state = userInitialState, action) => {
@@ -16,6 +17,7 @@ export const userReducer = (state = userInitialState, action) => {
 				name: userPayload.name,
 				email: userPayload.email,
 				token: userPayload.token,
+				role: userPayload.role,
 			};
 		case USER_LOGGED_OUT:
 			return userInitialState;

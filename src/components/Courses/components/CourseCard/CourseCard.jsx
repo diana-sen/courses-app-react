@@ -13,7 +13,7 @@ import './courseCard.css';
 import { getAuthorsSelector } from '../../../../store/selectors';
 import { deleteCourse } from '../../../../store/courses/actionCreators';
 
-const CourseCard = ({ course }) => {
+const CourseCard = ({ course, isAdmin }) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
@@ -41,6 +41,24 @@ const CourseCard = ({ course }) => {
 		dispatch(deleteCourse(course.id));
 	};
 
+	const AdminButtons = () => {
+		return isAdmin ? (
+			<div>
+				<Button
+					className='app__course-card--button app__button--edit-course'
+					text={<img src='/edit-icon-white.svg' alt='Edit' />}
+					onClick={goToCourseInfo}
+				></Button>
+
+				<Button
+					className='app__course-card--button app__button--remove-course'
+					text={<img src='/remove-icon-white.svg' alt='Remove' />}
+					onClick={deleteCourseCard}
+				></Button>
+			</div>
+		) : undefined;
+	};
+
 	return (
 		<section className='app-section-card'>
 			<h2 className='app__card-title'>{course.title}</h2>
@@ -58,17 +76,7 @@ const CourseCard = ({ course }) => {
 					text={BUTTON_SHOW_COURSE}
 					onClick={goToCourseInfo}
 				></Button>
-				<Button
-					className='app__course-card--button app__button--edit-course'
-					text={<img src='/edit-icon-white.svg' alt='Edit' />}
-					onClick={goToCourseInfo}
-				></Button>
-
-				<Button
-					className='app__course-card--button app__button--remove-course'
-					text={<img src='/remove-icon-white.svg' alt='Remove' />}
-					onClick={deleteCourseCard}
-				></Button>
+				<AdminButtons />
 			</div>
 		</section>
 	);

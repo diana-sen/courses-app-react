@@ -10,6 +10,10 @@ export const BUTTON_CANCEL_COURSE = 'Cancel';
 export const BUTTON_BACK_TO_COURSES = 'Back to courses';
 export const BUTTON_LOGIN = 'Login';
 export const BUTTON_REGISTER = 'Register';
+export const ADMIN_NAME = 'Administrator';
+export const ADMIN_ROLE = 'admin';
+export const ADMIN_USER = 'admin@email.com';
+export const USER_ROLE = 'user';
 
 export const mockedCoursesList = [
 	{

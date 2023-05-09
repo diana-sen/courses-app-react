@@ -11,11 +11,16 @@ import { loginUserService } from '../../services/authService';
 
 import { userLoggedIn } from '../../store/user/actionCreators';
 
-import { BUTTON_LOGIN } from '../../constants';
+import {
+	ADMIN_NAME,
+	ADMIN_ROLE,
+	ADMIN_USER,
+	BUTTON_LOGIN,
+	USER_ROLE,
+} from '../../constants';
 import './login.css';
 
 export const Login = () => {
-	//const { isAuthenticated, loginUser } = useContext(AuthContext);
 	const [emailErrorMessage, setEmailErrorMessage] = useState('');
 	const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 	const navigate = useNavigate();
@@ -55,12 +60,15 @@ export const Login = () => {
 
 	const storeLoginInfo = (userData) => {
 		const token = userData.result;
-		const name = userData.user.name;
+		const name = userData.user.name ?? ADMIN_NAME;
 		const email = userData.user.email;
-		window.localStorage.setItem('token', token);
-		window.localStorage.setItem('userName', name);
 
-		dispatch(userLoggedIn({ name, email, token }));
+		let role = email === ADMIN_USER ? ADMIN_ROLE : USER_ROLE;
+
+		window.localStorage.setItem('token', token);
+		//window.localStorage.setItem('userName', name); //to be deleted
+
+		dispatch(userLoggedIn({ name, email, token, role }));
 	};
 
 	const validateForm = (credentials) => {
