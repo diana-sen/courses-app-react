@@ -1,15 +1,20 @@
 import React, { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 
 import store from '../../store';
+import { getAuthorsSelector } from '../../store/selectors';
+import { saveAuthor } from '../../store/authors/actionCreators';
+import { saveNewCourseThunk } from '../../store/courses/thunk';
 
 import { Input } from '../../common/Input/Input';
 import { Button } from '../../common/Button/Button';
+import { AuthorsList } from './AuthorsList/AuthorsList';
 
 import { durationConverter } from '../../helpers/pipeDuration';
-
 import { addAuthor } from '../../helpers/authorsNaming';
-
 import { saveCourse } from '../../helpers/coursesService';
+
 import './courseForm.css';
 
 import {
@@ -19,12 +24,6 @@ import {
 	BUTTON_DELETE_AUTHOR,
 	BUTTON_CANCEL_COURSE,
 } from '../../constants';
-import { AuthorsList } from './AuthorsList/AuthorsList';
-import { useNavigate } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAuthorsSelector } from '../../store/selectors';
-import { saveAuthor } from '../../store/authors/actionCreators';
-import { addCourse } from '../../store/courses/actionCreators';
 
 export const CourseForm = () => {
 	const navigate = useNavigate();
@@ -60,8 +59,7 @@ export const CourseForm = () => {
 		if (missingFields) {
 			alert('Please fill all the missing fields:\n' + missingFields);
 		} else {
-			const newSavedCourse = saveCourse(objectCourse);
-			dispatch(addCourse(newSavedCourse));
+			dispatch(saveNewCourseThunk(objectCourse));
 			onCloseCreateCourse();
 		}
 	};
@@ -108,7 +106,6 @@ export const CourseForm = () => {
 		if (!!authorName) {
 			const author = addAuthor(authorName);
 			dispatch(saveAuthor(author));
-			//setAllAuthors((authors) => [...new Set([...authors, author])]);
 		} else {
 			alert('Invalid author name');
 		}

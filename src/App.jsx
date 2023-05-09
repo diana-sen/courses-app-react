@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import { userLoggedIn } from './store/user/actionCreators';
+//import { userLoggedIn } from './store/user/actionCreators';
 
 import Header from './components/Header/Header';
 import Courses from './components/Courses/Courses';
@@ -18,20 +18,17 @@ import { addAllCourses } from './store/courses/actionCreators';
 import { addAllAuthors } from './store/authors/actionCreators';
 import { getAllAuthors } from './services/authorsService';
 import { getAllCourses } from './services/coursesService';
+import { initializeUser } from './store/user/thunk';
 
 import './App.css';
 
 function App() {
 	const dispatch = useDispatch();
 
-	const updateStore = () => {
+	const updateUserToStore = () => {
 		const token = window.localStorage.getItem('token');
 		if (token) {
-			//get this data from /users/me
-			const name = 'Mikey';
-			const email = 'testingemail@gmail.com';
-			const role = 'user';
-			dispatch(userLoggedIn({ name, email, token, role }));
+			dispatch(initializeUser(token));
 		}
 	};
 
@@ -57,7 +54,7 @@ function App() {
 			});
 	};
 
-	updateStore();
+	updateUserToStore();
 	retrieveAllAuthors();
 	retrieveAllCourses();
 
