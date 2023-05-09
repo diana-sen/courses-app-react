@@ -11,3 +11,4 @@ export const SAVE_NEW_COURSE_ENDPOINT = '/courses/add';
 
 // Authors endpoints
 export const ALL_AUTHORS_ENDPOINT = '/authors/all';
+export const SAVE_NEW_AUTHOR_ENDPOINT = '/authors/add';

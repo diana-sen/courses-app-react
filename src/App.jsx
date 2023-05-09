@@ -65,7 +65,6 @@ function App() {
 				<Route path='/courses' element={<PrivateRoute />}>
 					<Route index element={<Courses />}></Route>
 					<Route path=':courseId' element={<CourseInfo />}></Route>
-					<Route path='add' element={<CourseForm />}></Route>
 				</Route>
 				<Route path='/courses/add' element={<PrivateAdminRoute />}>
 					<Route index element={<CourseForm />}></Route>

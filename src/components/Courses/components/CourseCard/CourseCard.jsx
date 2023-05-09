@@ -37,6 +37,10 @@ const CourseCard = ({ course, isAdmin }) => {
 		navigate(`./${course.id}`);
 	};
 
+	const updateCourse = () => {
+		navigate(`./update/${course.id}`);
+	};
+
 	const deleteCourseCard = () => {
 		dispatch(deleteCourse(course.id));
 	};
@@ -47,7 +51,7 @@ const CourseCard = ({ course, isAdmin }) => {
 				<Button
 					className='app__course-card--button app__button--edit-course'
 					text={<img src='/edit-icon-white.svg' alt='Edit' />}
-					onClick={goToCourseInfo}
+					onClick={updateCourse}
 				></Button>
 
 				<Button

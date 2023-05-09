@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import store from '../../store';
 import { getAuthorsSelector } from '../../store/selectors';
-import { saveAuthor } from '../../store/authors/actionCreators';
+
 import { saveNewCourseThunk } from '../../store/courses/thunk';
 
 import { Input } from '../../common/Input/Input';
@@ -12,8 +12,8 @@ import { Button } from '../../common/Button/Button';
 import { AuthorsList } from './AuthorsList/AuthorsList';
 
 import { durationConverter } from '../../helpers/pipeDuration';
-import { addAuthor } from '../../helpers/authorsNaming';
-import { saveCourse } from '../../helpers/coursesService';
+
+//import { saveCourse } from '../../helpers/coursesService';
 
 import './courseForm.css';
 
@@ -24,6 +24,7 @@ import {
 	BUTTON_DELETE_AUTHOR,
 	BUTTON_CANCEL_COURSE,
 } from '../../constants';
+import { saveNewAuthorThunk } from '../../store/authors/thunk';
 
 export const CourseForm = () => {
 	const navigate = useNavigate();
@@ -104,8 +105,7 @@ export const CourseForm = () => {
 	const addNewAuthor = useCallback(() => {
 		const authorName = document.querySelector('#author-name').value;
 		if (!!authorName) {
-			const author = addAuthor(authorName);
-			dispatch(saveAuthor(author));
+			dispatch(saveNewAuthorThunk(authorName));
 		} else {
 			alert('Invalid author name');
 		}
