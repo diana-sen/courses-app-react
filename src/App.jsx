@@ -6,7 +6,7 @@ import { userLoggedIn } from './store/user/actionCreators';
 
 import Header from './components/Header/Header';
 import Courses from './components/Courses/Courses';
-import { CreateCourse } from './components/CreateCourse/CreateCourse';
+import { CourseForm } from './components/CourseForm/CourseForm';
 import { CourseInfo } from './components/CourseInfo/CourseInfo';
 import { Login } from './components/Login/Login';
 import { Registration } from './components/Registration/Registration';
@@ -65,7 +65,7 @@ function App() {
 				<Route path='/courses' element={<PrivateRoute />}>
 					<Route index element={<Courses />}></Route>
 					<Route path=':courseId' element={<CourseInfo />}></Route>
-					<Route path='add' element={<CreateCourse />}></Route>
+					<Route path='add' element={<CourseForm />}></Route>
 				</Route>
 				<Route path='/' element={<PublicRoute />}>
 					<Route index element={<Login />}></Route>

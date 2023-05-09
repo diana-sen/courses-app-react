@@ -10,7 +10,7 @@ import { durationConverter } from '../../helpers/pipeDuration';
 import { addAuthor } from '../../helpers/authorsNaming';
 
 import { saveCourse } from '../../helpers/coursesService';
-import './createCourse.css';
+import './courseForm.css';
 
 import {
 	BUTTON_CREATE_COURSE,
@@ -26,7 +26,7 @@ import { getAuthorsSelector } from '../../store/selectors';
 import { saveAuthor } from '../../store/authors/actionCreators';
 import { addCourse } from '../../store/courses/actionCreators';
 
-export const CreateCourse = () => {
+export const CourseForm = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
