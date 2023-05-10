@@ -12,6 +12,7 @@ import { BrowserRouter } from 'react-router-dom';
 import Header from '../Header';
 import { createTestStore } from '../../../store';
 import { Provider } from 'react-redux';
+import { userLoggedIn } from '../../../store/user/actionCreators';
 
 let adminUserStore, otherUserStore, noEmailUserStore;
 describe('Header', () => {
@@ -31,15 +32,18 @@ describe('Header', () => {
 
 	const noEmailUser = {
 		isAuth: false,
-		name: 'Laura',
-		email: null,
-		role: 'user',
+		name: '',
+		email: '',
+		role: '',
 	};
 
 	beforeEach(() => {
 		adminUserStore = createTestStore(adminUser);
+		adminUserStore.dispatch(userLoggedIn(adminUser));
 		otherUserStore = createTestStore(otherUser);
+		otherUserStore.dispatch(userLoggedIn(otherUser));
 		noEmailUserStore = createTestStore(noEmailUser);
+		noEmailUserStore.dispatch(userLoggedIn(noEmailUser));
 	});
 
 	it('it should have a logo and username - admin', () => {
@@ -58,6 +62,25 @@ describe('Header', () => {
 		expect(headerContainer).toBeInTheDocument();
 		expect(logo).toBeInTheDocument();
 		expect(logo).toHaveAttribute('src', '/project-logo.png');
-		//expect(user).toHaveTextContent(adminUser.name);
+		expect(user).toHaveTextContent(adminUser.name);
+	});
+
+	it('it should have a logo and no username', () => {
+		const { queryByTestId } = render(
+			<Provider store={noEmailUserStore}>
+				<BrowserRouter>
+					<Header />
+				</BrowserRouter>
+			</Provider>
+		);
+
+		const headerContainer = queryByTestId('header');
+
+		const logo = queryByTestId('logo');
+		const user = queryByTestId('userName');
+		expect(headerContainer).toBeInTheDocument();
+		expect(logo).toBeInTheDocument();
+		expect(logo).toHaveAttribute('src', '/project-logo.png');
+		expect(user).toHaveTextContent('');
 	});
 });
