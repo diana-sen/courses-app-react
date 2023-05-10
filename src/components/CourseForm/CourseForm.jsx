@@ -85,7 +85,7 @@ export const CourseForm = () => {
 
 	const saveCourse = () => {
 		const objectCourse = {
-			duration,
+			duration: duration ? Number.parseInt(duration) : 0,
 			title,
 			description,
 			authors: courseAuthors.map((author) => author.id),
@@ -229,10 +229,10 @@ export const CourseForm = () => {
 								const enteredValue = e.nativeEvent.data;
 								const durationCourse = e.target.value;
 								if (
-									Number.isInteger(enteredValue * 1) ||
-									enteredValue == null
+									enteredValue == null ||
+									!Number.isNaN(Number.parseInt(enteredValue))
 								) {
-									setDuration(Number.parseInt(durationCourse));
+									setDuration(durationCourse);
 								} else {
 									e.target.value = durationCourse.replace(enteredValue, '');
 								}
