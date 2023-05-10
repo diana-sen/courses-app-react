@@ -19,12 +19,13 @@ const CourseCard = ({ course, isAdmin }) => {
 	const dispatch = useDispatch();
 
 	const authorsNames = (authors) => {
-		let names = authors
-			.map((author) => author.name)
-			.reduce(
-				(concatenatedAuthors, name) => concatenatedAuthors + ', ' + name,
-				''
-			);
+		let names = authors?.length
+			? authors
+					.map((author) => author.name)
+					.reduce(
+						(concatenatedAuthors, name) => concatenatedAuthors + ', ' + name
+					)
+			: '';
 		return names;
 	};
 	// const authors = authorsNames(getAuthors(course.authors)); //migrate to store

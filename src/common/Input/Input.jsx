@@ -4,6 +4,7 @@ import './input.css';
 export const Input = ({
 	id,
 	className,
+	value,
 	placeholderText,
 	onChange,
 	type,
@@ -27,6 +28,7 @@ export const Input = ({
 				id={id}
 				type={type}
 				className={classNames}
+				value={value}
 				placeholder={placeholderText}
 				onChange={onChange}
 			></input>

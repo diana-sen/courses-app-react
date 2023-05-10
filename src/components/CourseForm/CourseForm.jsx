@@ -1,11 +1,16 @@
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import store from '../../store';
-import { getAuthorsSelector } from '../../store/selectors';
+import { getAuthorsSelector, getCoursesSelector } from '../../store/selectors';
 
-import { saveNewCourseThunk } from '../../store/courses/thunk';
+import {
+	saveNewCourseThunk,
+	updateCourseThunk,
+} from '../../store/courses/thunk';
+import { saveNewAuthorThunk } from '../../store/authors/thunk';
 
 import { Input } from '../../common/Input/Input';
 import { Button } from '../../common/Button/Button';
@@ -13,46 +18,76 @@ import { AuthorsList } from './AuthorsList/AuthorsList';
 
 import { durationConverter } from '../../helpers/pipeDuration';
 
-//import { saveCourse } from '../../helpers/coursesService';
-
 import './courseForm.css';
-
 import {
 	BUTTON_CREATE_COURSE,
 	BUTTON_ADD_AUTHOR,
 	BUTTON_CREATE_AUTHOR,
 	BUTTON_DELETE_AUTHOR,
 	BUTTON_CANCEL_COURSE,
+	BUTTON_UPDATE_COURSE,
 } from '../../constants';
-import { saveNewAuthorThunk } from '../../store/authors/thunk';
 
 export const CourseForm = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
-	const [dataCourse, setDataCourse] = useState({
-		duration: 0,
-		authors: [],
-	});
+	const { courseId } = useParams();
 
-	const [allAuthors, setAllAuthors] = useState(useSelector(getAuthorsSelector));
-	const [courseAuthors, setCourseAuthors] = useState([]);
-	store.subscribe(() => {
+	const allCourses = useSelector(getCoursesSelector);
+	const allAuthorsStore = useSelector(getAuthorsSelector);
+
+	let initialState;
+	if (courseId) {
+		const course = allCourses.find((course) => course.id === courseId);
+		const initialCourseAuthors = allAuthorsStore.filter((author) =>
+			course.authors.includes(author.id)
+		);
+
+		const initialAvailableAuthors = allAuthorsStore.filter(
+			(author) => !course.authors.includes(author.id)
+		);
+
+		initialState = {
+			title: course.title,
+			description: course.description,
+			courseAuthors: initialCourseAuthors,
+			availableAuthors: initialAvailableAuthors,
+			duration: course.duration,
+		};
+	} else {
+		initialState = {
+			title: '',
+			description: '',
+			courseAuthors: [],
+			availableAuthors: allAuthorsStore,
+			duration: 0,
+		};
+	}
+
+	const [title, setTitle] = useState(initialState.title);
+	const [description, setDescription] = useState(initialState.description);
+	const [duration, setDuration] = useState(initialState.duration);
+	const [availableAuthors, setAvailableAuthors] = useState(
+		initialState.availableAuthors
+	);
+	const [courseAuthors, setCourseAuthors] = useState(
+		initialState.courseAuthors
+	);
+
+	const unsubscribeStore = store.subscribe(() => {
 		const authors = store.getState().authors;
 		const courseAuthorsIds = courseAuthors.map((author) => author.id);
-		setAllAuthors(
+		setAvailableAuthors(
 			authors.filter((author) => !courseAuthorsIds.includes(author.id))
 		);
 	});
 
-	const createCourse = () => {
-		const title = document.querySelector('#title')?.value;
-		const description = document.querySelector('#course-description')?.value;
-
+	const saveCourse = () => {
 		const objectCourse = {
-			...dataCourse,
-			title: title,
-			description: description,
+			duration,
+			title,
+			description,
 			authors: courseAuthors.map((author) => author.id),
 		};
 
@@ -60,8 +95,13 @@ export const CourseForm = () => {
 		if (missingFields) {
 			alert('Please fill all the missing fields:\n' + missingFields);
 		} else {
-			dispatch(saveNewCourseThunk(objectCourse));
-			onCloseCreateCourse();
+			if (courseId) {
+				dispatch(updateCourseThunk({ ...objectCourse, id: courseId }));
+			} else {
+				dispatch(saveNewCourseThunk(objectCourse));
+			}
+
+			onCloseSaveCourse();
 		}
 	};
 
@@ -75,7 +115,11 @@ export const CourseForm = () => {
 			missingFields += '• Description: enter minimum 10 characters\n';
 		}
 
-		if (!objectCourse.duration || objectCourse.duration === 0) {
+		if (
+			!objectCourse.duration ||
+			Number.isNaN(objectCourse.duration) ||
+			objectCourse.duration === 0
+		) {
 			missingFields += '• Duration: enter a number greater than zero\n';
 		}
 
@@ -92,14 +136,16 @@ export const CourseForm = () => {
 
 	const addAuthorToCourse = useCallback((author) => {
 		setCourseAuthors((authors) => [...authors, author]);
-		setAllAuthors((authors) => authors.filter((item) => item.id !== author.id));
+		setAvailableAuthors((authors) =>
+			authors.filter((item) => item.id !== author.id)
+		);
 	}, []);
 
 	const removeAuthorFromCourse = (author) => {
 		setCourseAuthors((authors) =>
 			authors.filter((item) => item.id !== author.id)
 		);
-		setAllAuthors((authors) => [...authors, author]);
+		setAvailableAuthors((authors) => [...authors, author]);
 	};
 
 	const addNewAuthor = useCallback(() => {
@@ -111,7 +157,8 @@ export const CourseForm = () => {
 		}
 	}, [dispatch]);
 
-	const onCloseCreateCourse = () => {
+	const onCloseSaveCourse = () => {
+		unsubscribeStore();
 		navigate('/courses');
 	};
 
@@ -119,29 +166,36 @@ export const CourseForm = () => {
 		<div className='app__add-wrapper'>
 			<div className='app__add-title-description-section'>
 				<div className='app__add-title'>
-					<h2>Title: </h2>
+					<h2>Title:</h2>
 					<Input
+						value={title}
 						placeholderText='Add title here...'
 						id='title'
 						className='app__add-input'
+						onChange={(e) => setTitle(e.target.value)}
 					></Input>
 				</div>
 				<div className='app__add-button'>
-					<Button text={BUTTON_CREATE_COURSE} onClick={createCourse}></Button>
+					<Button
+						text={courseId ? BUTTON_UPDATE_COURSE : BUTTON_CREATE_COURSE}
+						onClick={saveCourse}
+					></Button>
 					<Button
 						text={BUTTON_CANCEL_COURSE}
-						onClick={onCloseCreateCourse}
+						onClick={onCloseSaveCourse}
 					></Button>
 				</div>
 				<div className='app__add-description-section'>
 					<h3>Description: </h3>
 					<textarea
+						value={description}
 						maxLength='500'
 						placeholder='Add course description. Maximum 500 characters'
 						id='course-description'
 						name='course-description'
 						rows='5'
 						cols='50'
+						onChange={(e) => setDescription(e.target.value)}
 					></textarea>
 				</div>
 			</div>
@@ -167,6 +221,7 @@ export const CourseForm = () => {
 					<div className='create-duration-section'>
 						<h3>Duration: </h3>
 						<Input
+							value={duration}
 							placeholder='Enter duration in minutes...'
 							id='course-duration'
 							className='add-duration'
@@ -177,24 +232,21 @@ export const CourseForm = () => {
 									Number.isInteger(enteredValue * 1) ||
 									enteredValue == null
 								) {
-									setDataCourse((courseInfo) => ({
-										...courseInfo,
-										duration: Number.parseInt(durationCourse),
-									}));
+									setDuration(Number.parseInt(durationCourse));
 								} else {
 									e.target.value = durationCourse.replace(enteredValue, '');
 								}
 							}}
 						></Input>
 						<label>minutes</label>
-						<h1>{handleDuration(dataCourse.duration)}</h1>
+						<h1>{handleDuration(duration)}</h1>
 					</div>
 				</div>
 				<div className='add-current-author-section'>
 					<h3>Author</h3>
 					<div className='current-list-authors'>
 						<AuthorsList
-							authorList={allAuthors}
+							authorList={availableAuthors}
 							buttonText={BUTTON_ADD_AUTHOR}
 							onClick={addAuthorToCourse}
 						/>

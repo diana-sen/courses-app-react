@@ -14,7 +14,8 @@ export const coursesReducer = (state = coursesInitialState, action) => {
 			return state.filter((course) => course.id !== courseId);
 		case actions.COURSES_UPDATE:
 			const coursePayload = action.payload;
-			return [...state, coursePayload];
+			const index = state.findIndex((course) => course.id === coursePayload.id);
+			return state.toSpliced(index, 1, coursePayload);
 		default:
 			return state;
 	}
