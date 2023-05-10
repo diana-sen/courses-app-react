@@ -15,3 +15,8 @@ const rootReducer = combineReducers({
 const store = configureStore({ reducer: rootReducer });
 
 export default store;
+
+export function createTestStore() {
+	const store = configureStore({ reducer: rootReducer });
+	return store;
+}

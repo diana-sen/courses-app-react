@@ -26,7 +26,7 @@ function Header() {
 		if (user.isAuth) {
 			return (
 				<section className='app-user-name'>
-					<div>{user.name}</div>
+					<div data-testid='userName'>{user.name}</div>
 					<Button text={BUTTON_LOGOUT} onClick={logOutUser} />
 				</section>
 			);
@@ -34,7 +34,7 @@ function Header() {
 	};
 
 	return (
-		<header className='app-header'>
+		<header data-testid='header' className='app-header'>
 			<section className='app-logo'>
 				<Logo />
 				<h1>EPAM Courses App</h1>
