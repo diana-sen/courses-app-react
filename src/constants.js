@@ -1,5 +1,6 @@
 export const BUTTON_LOGOUT = 'Logout';
 export const BUTTON_CREATE_COURSE = 'Create course';
+export const BUTTON_UPDATE_COURSE = 'Update course';
 export const BUTTON_TEXT = 'Search';
 export const BUTTON_CREATE_AUTHOR = 'Create author';
 export const BUTTON_ADD_AUTHOR = 'Add author';
@@ -7,6 +8,13 @@ export const BUTTON_DELETE_AUTHOR = 'Delete author';
 export const BUTTON_ADD_COURSE = 'Add new course';
 export const BUTTON_SHOW_COURSE = 'Show course';
 export const BUTTON_CANCEL_COURSE = 'Cancel';
+export const BUTTON_BACK_TO_COURSES = 'Back to courses';
+export const BUTTON_LOGIN = 'Login';
+export const BUTTON_REGISTER = 'Register';
+export const ADMIN_NAME = 'Administrator';
+export const ADMIN_ROLE = 'admin';
+export const ADMIN_USER = 'admin@email.com';
+export const USER_ROLE = 'user';
 
 export const mockedCoursesList = [
 	{

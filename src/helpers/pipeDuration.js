@@ -1,4 +1,6 @@
 export function durationConverter(minutesDuration) {
+	minutesDuration = Number.isNaN(minutesDuration) ? 0 : minutesDuration ?? 0;
+
 	let hours = Math.floor(minutesDuration / 60);
 	let minutes = Math.round(minutesDuration % 60);
 	if (minutes < 10) {

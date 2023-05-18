@@ -8,9 +8,18 @@
     border-radius: 10px;
     height: 30px;
     width: 130px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+    margin: 0px 8px;
 }
 
 .app-common__button:hover {
     background: #bbddf0;
     color: black;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+}
+
+.app-common__button:active {
+    background: #bbddf0;
+    color: black;
+    box-shadow: #bbddf0 3px 3px 6px 0px inset, rgba(37, 84, 120, 0.5) -3px -3px 6px 1px inset;
 }
