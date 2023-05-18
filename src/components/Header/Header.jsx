@@ -37,7 +37,7 @@ function Header() {
 		<header className='app-header'>
 			<section className='app-logo'>
 				<Logo />
-				<h1>EPAM Courses App</h1>
+				<h1>Courses App</h1>
 			</section>
 			<UserSection />
 		</header>
